@@ -33,9 +33,10 @@ jobs:
           outputs: |
             dist/contribution-snake.svg?color_snake=%23FFD600&color_dots=%23171500,%23514400,%238C7500,%23C7A700,%23FFD600
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.PROFILE_TOKEN || secrets.GITHUB_TOKEN }}
       - name: Render statistics and publish activity
         run: python3 scripts/refresh_activity.py
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PROFILE_TOKEN: ${{ secrets.PROFILE_TOKEN }}
           GITHUB_REPOSITORY: ${{ github.repository }}

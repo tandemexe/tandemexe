@@ -9,16 +9,17 @@ import urllib.request
 import xml.etree.ElementTree as ET
 
 TOKEN = os.environ['GITHUB_TOKEN']
+PROFILE_TOKEN = os.environ.get('PROFILE_TOKEN') or TOKEN
 REPOSITORY = os.environ['GITHUB_REPOSITORY']
 OWNER = REPOSITORY.split('/')[0]
 DIST = Path('dist')
 DIST.mkdir(exist_ok=True)
 
-def api(path, method='GET', payload=None, allow_missing=False):
+def api(path, method='GET', payload=None, allow_missing=False, profile_read=False):
     request = urllib.request.Request(
         'https://api.github.com'+path,
         data=None if payload is None else json.dumps(payload).encode(),
-        headers={'Authorization':'Bearer '+TOKEN,'Accept':'application/vnd.github+json',
+        headers={'Authorization':'Bearer '+(PROFILE_TOKEN if profile_read else TOKEN),'Accept':'application/vnd.github+json',
                  'User-Agent':'profile-activity','X-GitHub-Api-Version':'2022-11-28'},
         method=method)
     try:
@@ -41,7 +42,7 @@ query = '''query($login: String!) {
     }
   }
 }'''
-response = api('/graphql', 'POST', {'query':query, 'variables':{'login':OWNER}})
+response = api('/graphql', 'POST', {'query':query, 'variables':{'login':OWNER}},profile_read=True)
 if response.get('errors'):
     raise RuntimeError('GitHub contribution calendar is unavailable.')
 collection = response['data']['user']['contributionsCollection']
