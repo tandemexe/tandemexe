@@ -1,8 +1,8 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="174" viewBox="0 0 1200 174" role="img" aria-label="Toolkit: JavaScript, HTML, CSS, C#. Languages used in my projects.">
-<title>Toolkit: JavaScript, HTML, CSS, C#. Languages used in my projects.</title>
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="174" viewBox="0 0 1200 174" role="img" aria-label="Toolkit: C++, Python, algorithms, and networking. Languages and areas of study.">
+<title>Toolkit: C++, Python, algorithms, and networking. Languages and areas of study.</title>
 <style>text{font-family:Arial,Helvetica,sans-serif;fill:#FFD600}.mono{font-family:Consolas,'Courier New',monospace}.muted{fill:#A58B19}</style>
 <rect width="1200" height="174" rx="16" fill="#090909"/><text x="40" y="40" class="mono muted" font-size="12" letter-spacing="2">01 / TOOLKIT</text>
-<text x="40" y="88" font-size="25">JavaScript</text><text x="330" y="88" font-size="25">HTML</text><text x="620" y="88" font-size="25">CSS</text><text x="910" y="88" font-size="25">C#</text>
+<text x="40" y="88" font-size="25">C++</text><text x="330" y="88" font-size="25">Python</text><text x="620" y="88" font-size="25">Algorithms</text><text x="910" y="88" font-size="25">Networking</text>
 <path d="M295 60v42M585 60v42M875 60v42" stroke="#3B330F"/>
 <path d="M40 120h1120" stroke="#3B330F"/>
-<text x="40" y="150" class="mono muted" font-size="12" letter-spacing="1">LANGUAGES USED IN MY PROJECTS</text></svg>
+<text x="40" y="150" class="mono muted" font-size="12" letter-spacing="1">LANGUAGES &amp; AREAS OF STUDY</text></svg>
