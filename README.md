@@ -28,13 +28,19 @@ My current interests include **high-frequency trading (HFT)** and **low-latency 
 <h2 align="center">Statistics</h2>
 
 <p align="center">
-  <img src="https://raw.githubusercontent.com/tandemexe/tandemexe/output/stats.svg" width="100%" alt="Real GitHub contributions, active days, and longest streak over the last twelve months." />
+  <picture>
+    <source media="(max-width: 600px)" srcset="https://raw.githubusercontent.com/tandemexe/tandemexe/output/stats-mobile.svg" />
+    <img src="https://raw.githubusercontent.com/tandemexe/tandemexe/output/stats.svg" width="100%" alt="Real GitHub contributions, active days, and longest streak over the last twelve months." />
+  </picture>
 </p>
 
 <h2 align="center">Contribution history</h2>
 
 <p align="center">
-  <img src="https://raw.githubusercontent.com/tandemexe/tandemexe/output/activity-chart.svg" width="100%" alt="Daily GitHub contributions over the last ninety days." />
+  <picture>
+    <source media="(max-width: 600px)" srcset="https://raw.githubusercontent.com/tandemexe/tandemexe/output/activity-chart-mobile.svg" />
+    <img src="https://raw.githubusercontent.com/tandemexe/tandemexe/output/activity-chart.svg" width="100%" alt="Daily GitHub contributions over the last ninety days." />
+  </picture>
 </p>
 
 <p align="center">
