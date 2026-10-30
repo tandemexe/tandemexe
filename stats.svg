@@ -1,7 +1,8 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="174" viewBox="0 0 1200 174" role="img" aria-label="GitHub contribution statistics over the last twelve months">
-<title>GitHub contribution statistics over the last twelve months</title>
-<rect width="1200" height="174" rx="16" fill="#090909"/>
-<g font-family="Arial,Helvetica,sans-serif"><text x="40" y="83" font-size="54" font-weight="700" fill="#FFD600">37</text><text x="40" y="118" font-family="Consolas,monospace" font-size="12" letter-spacing="2" fill="#A58B19">CONTRIBUTIONS</text><text x="440" y="83" font-size="54" font-weight="700" fill="#FFD600">5</text><text x="440" y="118" font-family="Consolas,monospace" font-size="12" letter-spacing="2" fill="#A58B19">ACTIVE DAYS</text><text x="840" y="83" font-size="54" font-weight="700" fill="#FFD600">2</text><text x="840" y="118" font-family="Consolas,monospace" font-size="12" letter-spacing="2" fill="#A58B19">LONGEST STREAK</text></g>
-<path d="M400 34v88M800 34v88" stroke="#3B330F"/>
-<text x="40" y="153" font-family="Consolas,monospace" font-size="10" letter-spacing="1" fill="#A58B19">LAST 12 MONTHS</text>
-<text x="1160" y="153" text-anchor="end" font-family="Consolas,monospace" font-size="10" letter-spacing="1" fill="#A58B19">2025-10-26 / 2026-10-30</text></svg>
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="212" viewBox="0 0 900 212" role="img" aria-label="Real GitHub statistics over the last twelve months">
+<title>Real GitHub statistics over the last twelve months</title>
+<rect x=".5" y=".5" width="899" height="211" rx="6" fill="#0B0E13" stroke="#343840"/>
+<g font-family="Consolas,'Courier New',monospace"><text x="150" y="104" text-anchor="middle" font-size="57" font-weight="600" fill="#E7C65F">38</text><text x="150" y="144" text-anchor="middle" font-size="21" fill="#DDDCD4">Contributions</text><text x="450" y="104" text-anchor="middle" font-size="57" font-weight="600" fill="#E7C65F">5</text><text x="450" y="144" text-anchor="middle" font-size="21" fill="#DDDCD4">Active days</text><text x="750" y="104" text-anchor="middle" font-size="57" font-weight="600" fill="#E7C65F">2</text><text x="750" y="144" text-anchor="middle" font-size="21" fill="#DDDCD4">Longest streak</text></g>
+<path d="M300 49v107M600 49v107M24 173h852" stroke="#30343B"/>
+<text x="24" y="28" font-family="Consolas,monospace" font-size="13" letter-spacing="1" fill="#95979F">LAST 12 MONTHS</text>
+<text x="876" y="28" text-anchor="end" font-family="Consolas,monospace" font-size="13" fill="#95979F">2025-10-26 / 2026-10-30</text>
+<text x="450" y="196" text-anchor="middle" font-family="Consolas,monospace" font-size="13" fill="#95979F">GitHub contribution calendar / UTC</text></svg>
