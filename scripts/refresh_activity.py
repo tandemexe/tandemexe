@@ -2,6 +2,7 @@
 import base64
 import json
 import os
+import re
 from pathlib import Path
 import urllib.error
 import urllib.request
@@ -31,6 +32,8 @@ def api(path, method='GET', payload=None, allow_missing=False):
 query = '''query($login: String!) {
   user(login: $login) {
     contributionsCollection {
+      startedAt
+      endedAt
       contributionCalendar {
         totalContributions
         weeks { contributionDays { date contributionCount } }
@@ -41,8 +44,10 @@ query = '''query($login: String!) {
 response = api('/graphql', 'POST', {'query':query, 'variables':{'login':OWNER}})
 if response.get('errors'):
     raise RuntimeError('GitHub contribution calendar is unavailable.')
-calendar = response['data']['user']['contributionsCollection']['contributionCalendar']
-days = [day for week in calendar['weeks'] for day in week['contributionDays']]
+collection = response['data']['user']['contributionsCollection']
+calendar = collection['contributionCalendar']
+start,end = collection['startedAt'][:10],collection['endedAt'][:10]
+days = [day for week in calendar['weeks'] for day in week['contributionDays'] if start <= day['date'] <= end]
 active = sum(day['contributionCount'] > 0 for day in days)
 longest = streak = 0
 for day in days:
@@ -65,6 +70,13 @@ stats = f'''<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="174" vi
 snake_path = DIST/'contribution-snake.svg'
 snake = snake_path.read_text(encoding='utf-8')
 root = ET.fromstring(snake)
+# Keep dimensions and colors explicit for SVG renderers without CSS variables
+# or CSS geometry properties. Browser keyframe animation remains intact.
+colors = dict(re.findall(r'(--[a-z0-9]+):([^;}]+)', snake))
+colors['--cb'] = '#302A10'
+for variable,value in colors.items():
+    snake = snake.replace('var('+variable+')',value)
+snake = re.sub(r'<rect class="(c(?: c[0-9]+)?)"',r'<rect width="12" height="12" class="\1"',snake)
 if 'profile-background' not in snake:
     position = snake.index('>',snake.index('<svg'))+1
     bounds = root.attrib.get('viewBox', '').split()
