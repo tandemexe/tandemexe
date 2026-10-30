@@ -31,7 +31,7 @@ jobs:
         with:
           github_user_name: ${{ github.repository_owner }}
           outputs: |
-            dist/contribution-snake.svg?color_snake=%23FFD600&color_dots=%23171500,%23514400,%238C7500,%23C7A700,%23FFD600
+            dist/contribution-snake.svg?color_snake=%23E7C65F&color_dots=%231B1D22,%2349412B,%237B6836,%23AF9446,%23E7C65F
         env:
           GITHUB_TOKEN: ${{ secrets.PROFILE_TOKEN || secrets.GITHUB_TOKEN }}
       - name: Render statistics and publish activity
