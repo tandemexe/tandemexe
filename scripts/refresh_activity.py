@@ -70,34 +70,47 @@ stats=f'''<svg xmlns="http://www.w3.org/2000/svg" width="900" height="212" viewB
 <text x="450" y="196" text-anchor="middle" font-family="Consolas,monospace" font-size="13" fill="#95979F">GitHub contribution calendar / UTC</text></svg>'''
 (DIST/'stats.svg').write_text(stats,encoding='utf-8')
 
+mobile_cards=[]
+for y,value,label in [(83,calendar['totalContributions'],'Contributions'),(158,active,'Active days'),(233,longest,'Longest streak')]:
+    mobile_cards.append(f'<text x="26" y="{y}" font-size="22" fill="#DDDCD4">{label}</text><text x="451" y="{y+4}" text-anchor="end" font-size="48" font-weight="600" fill="#E7C65F">{value:,}</text>')
+mobile_stats=f'''<svg xmlns="http://www.w3.org/2000/svg" width="480" height="300" viewBox="0 0 480 300" role="img" aria-label="Real GitHub statistics over the last twelve months">
+<title>Real GitHub statistics over the last twelve months</title><rect x=".5" y=".5" width="479" height="299" rx="6" fill="#0B0E13" stroke="#343840"/>
+<g font-family="Consolas,'Courier New',monospace"><text x="26" y="28" font-size="15" letter-spacing="1" fill="#95979F">LAST 12 MONTHS</text>{''.join(mobile_cards)}<text x="240" y="281" text-anchor="middle" font-size="15" fill="#95979F">{days[0]['date']} / {days[-1]['date']} / UTC</text></g>
+<path d="M26 110h428M26 185h428M26 258h428" stroke="#30343B"/></svg>'''
+(DIST/'stats-mobile.svg').write_text(mobile_stats,encoding='utf-8')
+
 recent=days[-90:]
 ceiling=max(4,math.ceil(max(day['contributionCount'] for day in recent)/4)*4)
-left,right,top,bottom=64,872,45,208
-points=[]
-for index,day in enumerate(recent):
-    x=left+(right-left)*index/max(1,len(recent)-1)
-    y=bottom-(bottom-top)*day['contributionCount']/ceiling
-    points.append((x,y))
-grid=[]
-for step in range(5):
-    value=ceiling*step//4
-    y=bottom-(bottom-top)*step/4
-    grid.append(f'<path d="M{left} {y:.1f}H{right}" stroke="#252A32"/><text x="48" y="{y+5:.1f}" text-anchor="end" font-size="14" fill="#92969F">{value}</text>')
-for fraction in [0,.25,.5,.75,1]:
-    index=round(fraction*(len(recent)-1))
-    x=points[index][0]
-    date=recent[index]['date'][5:]
-    grid.append(f'<text x="{x:.1f}" y="239" text-anchor="middle" font-size="14" fill="#92969F">{date}</text>')
-line=' '.join(f'{x:.2f},{y:.2f}' for x,y in points)
-area=f'{left},{bottom} '+line+f' {right},{bottom}'
-chart=f'''<svg xmlns="http://www.w3.org/2000/svg" width="900" height="260" viewBox="0 0 900 260" role="img" aria-label="Daily GitHub contributions over the last ninety days">
+def chart_svg(width,height,mobile=False):
+    left,right,top,bottom=(54,width-18,50,height-55) if mobile else (64,width-28,45,height-52)
+    label_size=18 if mobile else 14
+    points=[]
+    for index,day in enumerate(recent):
+        x=left+(right-left)*index/max(1,len(recent)-1)
+        y=bottom-(bottom-top)*day['contributionCount']/ceiling
+        points.append((x,y))
+    grid=[]
+    for step in range(5):
+        value=ceiling*step//4
+        y=bottom-(bottom-top)*step/4
+        grid.append(f'<path d="M{left} {y:.1f}H{right}" stroke="#252A32"/><text x="{left-16}" y="{y+5:.1f}" text-anchor="end" font-size="{label_size}" fill="#92969F">{value}</text>')
+    for fraction in ([0,.5,1] if mobile else [0,.25,.5,.75,1]):
+        index=round(fraction*(len(recent)-1))
+        x=points[index][0]
+        date=recent[index]['date'][5:]
+        anchor='start' if fraction==0 else 'end' if fraction==1 else 'middle'
+        grid.append(f'<text x="{x:.1f}" y="{height-21}" text-anchor="{anchor}" font-size="{label_size}" fill="#92969F">{date}</text>')
+    line=' '.join(f'{x:.2f},{y:.2f}' for x,y in points)
+    area=f'{left},{bottom} '+line+f' {right},{bottom}'
+    return f'''<svg xmlns="http://www.w3.org/2000/svg" width="{width}" height="{height}" viewBox="0 0 {width} {height}" role="img" aria-label="Daily GitHub contributions over the last ninety days">
 <title>Daily GitHub contributions over the last ninety days</title>
 <defs><linearGradient id="area" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="#E7C65F" stop-opacity=".2"/><stop offset="1" stop-color="#E7C65F" stop-opacity="0"/></linearGradient></defs>
-<rect x=".5" y=".5" width="899" height="259" rx="6" fill="#0B0E13" stroke="#343840"/>
-<g font-family="Consolas,monospace"><text x="24" y="26" font-size="13" letter-spacing="1" fill="#B5B6B9">DAILY CONTRIBUTIONS / LAST 90 DAYS</text>{''.join(grid)}</g>
+<rect x=".5" y=".5" width="{width-1}" height="{height-1}" rx="6" fill="#0B0E13" stroke="#343840"/>
+<g font-family="Consolas,monospace"><text x="24" y="26" font-size="{16 if mobile else 13}" letter-spacing="{.2 if mobile else 1}" fill="#B5B6B9">DAILY CONTRIBUTIONS / LAST 90 DAYS</text>{''.join(grid)}</g>
 <polygon points="{area}" fill="url(#area)"/><polyline points="{line}" stroke="#E7C65F" stroke-width="2.5" stroke-linejoin="round" fill="none"/>
 </svg>'''
-(DIST/'activity-chart.svg').write_text(chart,encoding='utf-8')
+(DIST/'activity-chart.svg').write_text(chart_svg(900,260),encoding='utf-8')
+(DIST/'activity-chart-mobile.svg').write_text(chart_svg(480,300,True),encoding='utf-8')
 
 snake_path = DIST/'contribution-snake.svg'
 snake = snake_path.read_text(encoding='utf-8')
@@ -125,7 +138,7 @@ base = '/repos/'+REPOSITORY
 ref = api(base+'/git/ref/heads/output', allow_missing=True)
 parent = api(base+'/git/commits/'+ref['object']['sha']) if ref else None
 tree_items = []
-for path in [DIST/'stats.svg',DIST/'activity-chart.svg',snake_path]:
+for path in [DIST/'stats.svg',DIST/'stats-mobile.svg',DIST/'activity-chart.svg',DIST/'activity-chart-mobile.svg',snake_path]:
     blob = api(base+'/git/blobs','POST',{'content':base64.b64encode(path.read_bytes()).decode(),'encoding':'base64'})
     tree_items.append({'path':path.name,'mode':'100644','type':'blob','sha':blob['sha']})
 tree = api(base+'/git/trees','POST',{'tree':tree_items})
